@@ -1,6 +1,7 @@
 package me.nickp0is0n.escapefromthicgrim
 
 import me.nickp0is0n.escapefromthicgrim.models.Player
+import me.nickp0is0n.escapefromthicgrim.models.PlayerProperty
 import me.nickp0is0n.escapefromthicgrim.models.field.PlayField
 import me.nickp0is0n.escapefromthicgrim.utils.ClassicWorldGenerator
 import me.nickp0is0n.escapefromthicgrim.utils.WorldGenerator
@@ -8,11 +9,11 @@ import java.util.*
 import kotlin.random.Random
 
 
-//TODO: proper console UI
+//TODO:proper console UI
 fun main() {
     println("Escape From Thicgrim")
     println("Console Edition")
-    println("Version 0.0.1, Created by Mykola Chaikovskyi on 24.08.2022\n")
+    println("Version 0.0.2, Created by Mykola Chaikovskyi on 24.08.2022\n")
     initializeGameSettings()
 }
 
@@ -61,6 +62,16 @@ fun STUB_gameplay(player: Player, field: PlayField)
             "e" -> {
                 field.playerPosition = Pair(field.playerPosition.first + 1, field.playerPosition.second - 1)
                 println("Your character moved east and encountered nothing.\n")
+            }
+        }
+        if (field.cells[field.playerPosition.first][field.playerPosition.second].perk != null) {
+            val perk = field.cells[field.playerPosition.first][field.playerPosition.second].perk!!
+            println("${player.nickname} can feel the ${perk.getPerkUIName()} in the zone. Your ${perk.getPropertyChange().first} is changed: ${perk.getPropertyChange().second}.")
+            //TODO: make another class for game logic
+            when(field.cells[field.playerPosition.first][field.playerPosition.second].perk!!.getPropertyChange().first) {
+                PlayerProperty.HEALTH -> player.health += perk.getPropertyChange().second
+                PlayerProperty.ARMOR -> player.armor += perk.getPropertyChange().second
+                PlayerProperty.STAMINA -> player.stamina += perk.getPropertyChange().second
             }
         }
     }

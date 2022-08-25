@@ -6,4 +6,6 @@ class HealthBonusPerk: CellPerk {
     override fun getPropertyChange(): Pair<PlayerProperty, Int> {
         return Pair(PlayerProperty.HEALTH, +30)
     }
+
+    override fun getPerkUIName(): String = "Healing Aura"
 }
