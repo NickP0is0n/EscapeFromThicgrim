@@ -1,8 +1,9 @@
 package me.nickp0is0n.escapefromthicgrim
 
 import me.nickp0is0n.escapefromthicgrim.models.Player
-import me.nickp0is0n.escapefromthicgrim.models.field.FieldCell
 import me.nickp0is0n.escapefromthicgrim.models.field.PlayField
+import me.nickp0is0n.escapefromthicgrim.utils.ClassicWorldGenerator
+import me.nickp0is0n.escapefromthicgrim.utils.WorldGenerator
 import java.util.*
 import kotlin.random.Random
 
@@ -16,7 +17,7 @@ fun main() {
 }
 
 fun initializeGameSettings() {
-    var input = Scanner(System.`in`)
+    val input = Scanner(System.`in`)
 
     println("Please enter your character's nickname (ex. Jacob): ")
     val player = Player(input.nextLine())
@@ -27,20 +28,9 @@ fun initializeGameSettings() {
     player.cash = Random.nextInt(0, (100 - (difficultyLevel - 1) * 5))
     player.stamina = 100
 
-    val field = PlayField(playerPosition = Pair(Random.nextInt(0, 128), Random.nextInt(0, 128)), cells = STUB_generatePlayfield())
+    val worldGenerator: WorldGenerator = ClassicWorldGenerator()
+    val field = worldGenerator.generateFieldCell()
     STUB_gameplay(player, field)
-}
-
-fun STUB_generatePlayfield(): MutableList<MutableList<FieldCell>> {
-    val field = mutableListOf<MutableList<FieldCell>>()
-    for (i in 0 until 128) {
-        field.add(mutableListOf())
-        for (j in 0 until 128) {
-            field[i].add(FieldCell(null, null))
-        }
-    }
-
-    return field
 }
 
 fun STUB_gameplay(player: Player, field: PlayField)
