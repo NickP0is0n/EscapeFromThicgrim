@@ -2,11 +2,13 @@ package me.nickp0is0n.escapefromthicgrim
 
 import me.nickp0is0n.escapefromthicgrim.models.Player
 import me.nickp0is0n.escapefromthicgrim.models.PlayerProperty
+import me.nickp0is0n.escapefromthicgrim.models.field.PerkAndEntityPool
 import me.nickp0is0n.escapefromthicgrim.models.field.PlayField
 import me.nickp0is0n.escapefromthicgrim.utils.ClassicWorldGenerator
 import me.nickp0is0n.escapefromthicgrim.utils.WorldGenerator
 import java.util.*
 import kotlin.random.Random
+import kotlin.reflect.full.primaryConstructor
 
 
 //TODO:proper console UI
@@ -29,7 +31,7 @@ fun initializeGameSettings() {
     player.cash = Random.nextInt(0, (100 - (difficultyLevel - 1) * 5))
     player.stamina = 100
 
-    val worldGenerator: WorldGenerator = ClassicWorldGenerator()
+    val worldGenerator: WorldGenerator = ClassicWorldGenerator(difficultyLevel)
     val field = worldGenerator.generateFieldCell()
     STUB_gameplay(player, field)
 }
