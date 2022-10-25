@@ -4,6 +4,7 @@ import me.nickp0is0n.escapefromthicgrim.models.Player
 import me.nickp0is0n.escapefromthicgrim.models.PlayerProperty
 import me.nickp0is0n.escapefromthicgrim.models.field.PerkAndEntityPool
 import me.nickp0is0n.escapefromthicgrim.models.field.PlayField
+import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
 import me.nickp0is0n.escapefromthicgrim.utils.ClassicWorldGenerator
 import me.nickp0is0n.escapefromthicgrim.utils.WorldGenerator
 import java.util.*
@@ -39,33 +40,46 @@ fun initializeGameSettings() {
 fun STUB_gameplay(player: Player, field: PlayField)
 {
     var currentMove = 0
+    var attackAvailable = false
     while (true) {
         currentMove++
         println("Move $currentMove.")
         println("${player.nickname} is staying in position X: ${field.playerPosition.first}, Y: ${field.playerPosition.second}.")
         println("${player.nickname} is wearing: ${player.gadgets.joinToString(", ")}")
         println("${player.nickname}'s health: ${player.health}, your armor: ${player.armor}, your stamina: ${player.stamina}.")
-        println("Enter your command (available: move [n,w,s,e]: ")
+        println("Enter your command (available: ${if (attackAvailable) "attack, escape" else "move [n,w,s,e]"}): ")
         val input = Scanner(System.`in`)
-        val command = input.nextLine()
-        when(command.substring(5)) {
-            "n" -> {
-                field.playerPosition = Pair(field.playerPosition.first, field.playerPosition.second + 1)
-                println("Your character moved north and encountered nothing.\n")
+        while (true) {
+            val command = input.nextLine()
+            if (command.contains("move") && !attackAvailable) {
+                when (command.substring(5)) {
+                    "n" -> {
+                        field.playerPosition = Pair(field.playerPosition.first, field.playerPosition.second + 1)
+                        println("Your character moved north.\n")
+                    }
+
+                    "s" -> {
+                        field.playerPosition = Pair(field.playerPosition.first, field.playerPosition.second - 1)
+                        println("Your character moved south.\n")
+                    }
+
+                    "w" -> {
+                        field.playerPosition = Pair(field.playerPosition.first - 1, field.playerPosition.second)
+                        println("Your character moved west.\n")
+                    }
+
+                    "e" -> {
+                        field.playerPosition = Pair(field.playerPosition.first + 1, field.playerPosition.second - 1)
+                        println("Your character moved east.\n")
+                    }
+                }
+                break
             }
-            "s" -> {
-                field.playerPosition = Pair(field.playerPosition.first, field.playerPosition.second - 1)
-                println("Your character moved south and encountered nothing.\n")
-            }
-            "w" -> {
-                field.playerPosition = Pair(field.playerPosition.first - 1, field.playerPosition.second)
-                println("Your character moved west and encountered nothing.\n")
-            }
-            "e" -> {
-                field.playerPosition = Pair(field.playerPosition.first + 1, field.playerPosition.second - 1)
-                println("Your character moved east and encountered nothing.\n")
+            else {
+                TODO("attack and escape system")
             }
         }
+
         if (field.cells[field.playerPosition.first][field.playerPosition.second].perk != null) {
             val perk = field.cells[field.playerPosition.first][field.playerPosition.second].perk!!
             println("${player.nickname} can feel the ${perk.getPerkUIName()} in the zone. Your ${perk.getPropertyChange().first} is changed: ${perk.getPropertyChange().second}.")
@@ -75,6 +89,18 @@ fun STUB_gameplay(player: Player, field: PlayField)
                 PlayerProperty.ARMOR -> player.armor += perk.getPropertyChange().second
                 PlayerProperty.STAMINA -> player.stamina += perk.getPropertyChange().second
             }
+        }
+
+        if (field.cells[field.playerPosition.first][field.playerPosition.second].entity is AggressiveCellEntity) {
+            val entity: AggressiveCellEntity = field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity
+            println("${player.nickname} encountered aggressive ${entity.getEntityName()}! Their health is at ${entity.getEntityHealth()} points and it can attack you with ${entity.getEntityDamage()}.")
+            if (entity.getEntityArmor() > 0) {
+                println("This mob also wears an armor, which improves their defence up ${entity.getEntityArmor()} points!")
+            }
+            attackAvailable = true
+        }
+        else {
+            println("Unfortunately, nothing was there.")
         }
     }
 }

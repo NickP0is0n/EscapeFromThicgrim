@@ -29,9 +29,9 @@ class ClassicWorldGenerator(private val difficulty: Int): WorldGenerator {
                 if(Random.nextInt(0, 10) in 0..FRIENDLY_ENTITY_SPAWN_PROBABILITY) {
                     entity = BasicSellerEntity()
                 }
-                if(entity == null && Random.nextInt(0, 40) in 0..difficulty) {
+                if(entity == null && Random.nextInt(0, 30) in 0..difficulty) {
                     val entityID = Random.nextInt(PerkAndEntityPool.entityPool.size)
-                    if (PerkAndEntityPool.entityPool[entityID].primaryConstructor!!.parameters[0].name != "difficulty") { // should probably check for type. don't know how atm
+                    if (PerkAndEntityPool.entityPool[entityID].primaryConstructor!!.parameters[0].name != "difficultyLevel") { // should probably check for type. don't know how atm
                         logger.warning("${PerkAndEntityPool.entityPool[entityID].simpleName} is not compatible with current world generator and therefore will not be used for this session.")
                     }
                     entity = PerkAndEntityPool.entityPool[entityID].primaryConstructor!!.call(difficulty) // at least without mods guaranteed to be aggressive entity

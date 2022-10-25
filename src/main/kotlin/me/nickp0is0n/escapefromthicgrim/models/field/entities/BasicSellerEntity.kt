@@ -5,4 +5,8 @@ class BasicSellerEntity: FriendlyCellEntity {
     override fun getEntityHealth(): Int {
         return 100
     }
+
+    override fun getEntityName(): String {
+        return "Friendly good ol' seller"
+    }
 }

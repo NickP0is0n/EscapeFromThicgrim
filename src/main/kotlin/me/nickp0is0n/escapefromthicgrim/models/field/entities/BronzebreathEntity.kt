@@ -9,6 +9,10 @@ class BronzebreathEntity(val difficultyLevel: Int): AggressiveCellEntity { // ba
         health = 100 * (Random.nextInt(1, difficultyLevel) / 2)
     }
 
+    override fun getEntityName(): String {
+        return "Bronzebreath golem"
+    }
+
     override fun getEntityDamage(): Int {
         return 50 * (Random.nextInt(1, difficultyLevel) / 2)
     }
