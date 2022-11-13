@@ -16,7 +16,7 @@ const val BASIC_ESCAPE_DIFFICULTY = 6
 fun main() {
     println("Escape From Thicgrim")
     println("Console Edition")
-    println("Version 0.0.2, Created by Mykola Chaikovskyi on 24.08.2022\n")
+    println("Version 0.0.4, Created by Mykola Chaikovskyi on 24.08.2022\n")
     initializeGameSettings()
 }
 
@@ -80,29 +80,39 @@ fun STUB_gameplay(player: Player, field: PlayField, difficulty: Int)
             else {
                 when (command) {
                     "attack" -> {
-                        TODO("Make a proper combat system")
+                        val entity = field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity
+                        val totalPlayerDamage = (player.damage + player.gadgets.sumOf { if (it.affectedProperties.count { it.first == PlayerProperty.DAMAGE } > 0) it.affectedProperties.find { it.first == PlayerProperty.DAMAGE }!!.second else 0})
+                        var damageAbsorbed = 0
+                        if (entity.getEntityArmor() > 0) {
+                            val possibleArmorDamage: Int = totalPlayerDamage / 2
+                            damageAbsorbed = if (entity.getEntityArmor() >= possibleArmorDamage) {
+                                possibleArmorDamage
+                            } else {
+                                entity.getEntityArmor()
+                            }
+                            entity.reduceEntityArmor(damageAbsorbed)
+                            entity.reduceEntityHealth(totalPlayerDamage - damageAbsorbed)
+                            println("${player.nickname} hit their armor, reduced it to ${entity.getEntityArmor()}.")
+                        }
+                        else {
+                            entity.reduceEntityHealth(totalPlayerDamage)
+                        }
+                        println("${player.nickname} hit the mob, dealt ${totalPlayerDamage - damageAbsorbed} of pure damage.")
+                        if (entity.getEntityHealth() <= 0) {
+                            println("${player.nickname} killed ${entity.getEntityName()}.")
+                            field.cells[field.playerPosition.first][field.playerPosition.second].entity = null
+                            attackAvailable = false
+                        }
+                        else {
+                            println("${entity.getEntityName()} still has ${entity.getEntityHealth()} health and ${entity.getEntityArmor()} armor points.")
+                            println("${entity.getEntityName()} attacked ${player.nickname} back.")
+                            entityAttack(entity, player)
+                        }
                     }
                     "escape" -> {
                         if (Random.nextInt(0 until (20 + BASIC_ESCAPE_DIFFICULTY)) < difficulty + BASIC_ESCAPE_DIFFICULTY) {
                             println("${player.nickname} tried to escape the fight, but got caught.")
-                            println("${(field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity).getEntityDamage()} damage received.")
-                            var damageAbsorbed: Int
-                            val totalDamage = (field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity).getEntityDamage()
-                            if (player.armor > 0) {
-                                val possibleArmorDamage: Int = totalDamage / 2
-                                if (player.armor >= possibleArmorDamage) {
-                                    damageAbsorbed = possibleArmorDamage
-                                    player.armor -= possibleArmorDamage
-                                }
-                                else {
-                                    damageAbsorbed = player.armor
-                                    player.armor = 0
-                                }
-                                player.health -= totalDamage - damageAbsorbed
-                            }
-                            else {
-                                player.health -= totalDamage
-                            }
+                            entityAttack(field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity, player)
                         }
                         else {
                             println("${player.nickname} bravely retreated from a fight.") // p.s. what a loser
@@ -124,6 +134,7 @@ fun STUB_gameplay(player: Player, field: PlayField, difficulty: Int)
                         PlayerProperty.HEALTH -> player.health += perk.getPropertyChange().second
                         PlayerProperty.ARMOR -> player.armor += perk.getPropertyChange().second
                         PlayerProperty.STAMINA -> player.stamina += perk.getPropertyChange().second
+                        PlayerProperty.DAMAGE -> player.damage += perk.getPropertyChange().second
                     }
                     field.cells[field.playerPosition.first][field.playerPosition.second].perk = null
                 }
@@ -144,5 +155,25 @@ fun STUB_gameplay(player: Player, field: PlayField, difficulty: Int)
 
             characterMoved = false
         }
+    }
+}
+
+private fun entityAttack(entity: AggressiveCellEntity, player: Player) {
+    println("${entity.getEntityDamage()} damage received.")
+    var damageAbsorbed: Int
+    val totalDamage =
+        entity.getEntityDamage()
+    if (player.armor > 0) {
+        val possibleArmorDamage: Int = totalDamage / 2
+        if (player.armor >= possibleArmorDamage) {
+            damageAbsorbed = possibleArmorDamage
+            player.armor -= possibleArmorDamage
+        } else {
+            damageAbsorbed = player.armor
+            player.armor = 0
+        }
+        player.health -= totalDamage - damageAbsorbed
+    } else {
+        player.health -= totalDamage
     }
 }

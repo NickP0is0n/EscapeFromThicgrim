@@ -8,5 +8,6 @@ data class Player(
     var armor: Int = 0,
     var stamina: Int = 0,
     var cash: Int = 0,
+    var damage: Int = 100,
     val gadgets: MutableList<Gadget> = mutableListOf()
 ): Serializable

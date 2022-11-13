@@ -4,9 +4,11 @@ import kotlin.random.Random
 
 class BronzebreathEntity(val difficultyLevel: Int): AggressiveCellEntity { // basic aggressive mob, no armor
     private var health = 0
+    private var damage = 0
 
     init {
         health = (100 * (Random.nextInt(1, difficultyLevel)) / 2)
+        damage = (50 * (Random.nextInt(1, difficultyLevel)) / 2)
     }
 
     override fun getEntityName(): String {
@@ -14,7 +16,7 @@ class BronzebreathEntity(val difficultyLevel: Int): AggressiveCellEntity { // ba
     }
 
     override fun getEntityDamage(): Int {
-        return (50 * (Random.nextInt(1, difficultyLevel)) / 2)
+        return damage
     }
 
     override fun getEntityArmor(): Int {
@@ -27,5 +29,9 @@ class BronzebreathEntity(val difficultyLevel: Int): AggressiveCellEntity { // ba
 
     override fun getEntityHealth(): Int {
         return health
+    }
+
+    override fun reduceEntityArmor(amount: Int) {
+        return
     }
 }
