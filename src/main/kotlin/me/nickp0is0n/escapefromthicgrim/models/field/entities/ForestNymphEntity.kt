@@ -7,8 +7,8 @@ class ForestNymphEntity(val difficultyLevel: Int): AggressiveCellEntity {
     private var damage = 0
 
     init {
-        health = (40 * (Random.nextInt(1, difficultyLevel)) / 2)
-        damage = (80 * (Random.nextInt(1, difficultyLevel)) / 2)
+        health = (40 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
+        damage = (80 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
     }
 
     override fun getEntityName(): String {

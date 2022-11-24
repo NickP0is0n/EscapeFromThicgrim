@@ -8,9 +8,9 @@ class EvilKnightEntity(val difficultyLevel: Int): AggressiveCellEntity {
     private var armor = 0
 
     init {
-        health = (500 * (Random.nextInt(1, difficultyLevel)) / 2)
-        damage = (300 * (Random.nextInt(1, difficultyLevel)) / 2)
-        armor = (100 * (Random.nextInt(1, difficultyLevel)) / 2)
+        health = (500 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
+        damage = (300 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
+        armor = (100 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
     }
 
     override fun getEntityName(): String {

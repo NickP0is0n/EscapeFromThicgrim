@@ -7,8 +7,8 @@ class BronzebreathEntity(val difficultyLevel: Int): AggressiveCellEntity { // ba
     private var damage = 0
 
     init {
-        health = (100 * (Random.nextInt(1, difficultyLevel)) / 2)
-        damage = (50 * (Random.nextInt(1, difficultyLevel)) / 2)
+        health = (100 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
+        damage = (50 * (Random.nextInt(1, difficultyLevel + 1)) / 2)
     }
 
     override fun getEntityName(): String {
