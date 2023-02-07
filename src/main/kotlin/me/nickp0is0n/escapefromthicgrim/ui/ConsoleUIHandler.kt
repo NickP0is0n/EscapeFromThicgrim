@@ -49,7 +49,7 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
     }
 
     override fun displayEscapeResult(isEscaped: Boolean) {
-        if (isEscaped) {
+        if (!isEscaped) {
             println("${session.player.nickname} tried to escape the fight, but got caught.")
         }
         else {
