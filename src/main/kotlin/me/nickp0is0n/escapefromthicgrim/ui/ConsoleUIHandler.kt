@@ -3,6 +3,7 @@ package me.nickp0is0n.escapefromthicgrim.ui
 import me.nickp0is0n.escapefromthicgrim.gamelogic.GameSession
 import me.nickp0is0n.escapefromthicgrim.gamelogic.GameState
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
+import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
 
 class ConsoleUIHandler(val session: GameSession): UIHandler {
     override fun updateSessionInfo() {
@@ -56,4 +57,25 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
             println("${session.player.nickname} bravely retreated from a fight.") // p.s. what a loser
         }
     }
+
+    override fun displayMobEncounter(entity: AggressiveCellEntity) {
+        println("${session.player.nickname} encountered aggressive ${entity.getEntityName()}! Their health is at ${entity.getEntityHealth()} points and it can attack you with ${entity.getEntityDamage()}.")
+        if (entity.getEntityArmor() > 0) {
+            println("This mob also wears an armor, which improves their defence up ${entity.getEntityArmor()} points!")
+        }
+    }
+
+    override fun displayEmptyCell() {
+        println("Unfortunately, nothing was there.")
+    }
+
+    override fun displayPerkInfo(perk: CellPerk) {
+        println("${session.player.nickname} can feel the ${perk.getPerkUIName()} in the zone. Your ${perk.getPropertyChange().first} is changed: ${perk.getPropertyChange().second}.")
+    }
+
+    override fun displayDamage(entity: AggressiveCellEntity) {
+        println("${entity.getEntityDamage()} damage received.")
+    }
+
+
 }

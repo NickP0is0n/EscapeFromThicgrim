@@ -19,7 +19,7 @@ class GameSession (val player: Player,
         when {
             field.cells[field.playerPosition.first][field.playerPosition.second].perk != null -> {
                 val perk = field.cells[field.playerPosition.first][field.playerPosition.second].perk!!
-                println("${player.nickname} can feel the ${perk.getPerkUIName()} in the zone. Your ${perk.getPropertyChange().first} is changed: ${perk.getPropertyChange().second}.")
+                uiHandler.displayPerkInfo(perk)
                 when (field.cells[field.playerPosition.first][field.playerPosition.second].perk!!.getPropertyChange().first) {
                     PlayerProperty.HEALTH -> player.health += perk.getPropertyChange().second
                     PlayerProperty.ARMOR -> player.armor += perk.getPropertyChange().second
@@ -32,22 +32,19 @@ class GameSession (val player: Player,
             field.cells[field.playerPosition.first][field.playerPosition.second].entity is AggressiveCellEntity -> {
                 val entity: AggressiveCellEntity =
                     field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity
-                println("${player.nickname} encountered aggressive ${entity.getEntityName()}! Their health is at ${entity.getEntityHealth()} points and it can attack you with ${entity.getEntityDamage()}.")
-                if (entity.getEntityArmor() > 0) {
-                    println("This mob also wears an armor, which improves their defence up ${entity.getEntityArmor()} points!")
-                }
+                uiHandler.displayMobEncounter(entity)
                 state = GameState.COMBAT
             }
 
             else -> {
-                println("Unfortunately, nothing was there.")
+                uiHandler.displayEmptyCell()
             }
         }
     }
 
     fun entityAttack(entity: AggressiveCellEntity, player: Player) {
-        println("${entity.getEntityDamage()} damage received.")
-        var damageAbsorbed: Int
+        uiHandler.displayDamage(entity)
+        val damageAbsorbed: Int
         val totalDamage =
             entity.getEntityDamage()
         if (player.armor > 0) {
