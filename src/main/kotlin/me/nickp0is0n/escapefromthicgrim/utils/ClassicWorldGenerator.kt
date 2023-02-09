@@ -7,8 +7,6 @@ import me.nickp0is0n.escapefromthicgrim.models.field.entities.BasicSellerEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.CellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
 import kotlin.random.Random
-import kotlin.reflect.KType
-import kotlin.reflect.full.createType
 import kotlin.reflect.full.primaryConstructor
 
 const val PERK_SPAWN_PROBABILITY = 4
@@ -24,7 +22,8 @@ class ClassicWorldGenerator(private val difficulty: Int): WorldGenerator {
                 var perk: CellPerk? = null
                 var entity: CellEntity? = null
                 if(Random.nextInt(0, 10) in 0..PERK_SPAWN_PROBABILITY) {
-                    perk = PerkAndEntityPool.perkPool[Random.nextInt(0, PerkAndEntityPool.perkPool.size)]
+                    perk = PerkAndEntityPool.perkPool[Random.nextInt(0, PerkAndEntityPool.perkPool.size)].primaryConstructor!!.call()
+                        //PerkAndEntityPool.perkPool[Random.nextInt(0, PerkAndEntityPool.perkPool.size)]
                 }
                 if(Random.nextInt(0, 10) in 0..FRIENDLY_ENTITY_SPAWN_PROBABILITY) {
                     entity = BasicSellerEntity()
