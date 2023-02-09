@@ -15,7 +15,7 @@ import kotlin.random.Random
 fun main() {
     println("Escape From Thicgrim")
     println("Console Edition")
-    println("Version 0.0.6, built on 09.02.2023")
+    println("Version 0.0.7, built on 09.02.2023")
     println("Created by Mykola Chaikovskyi\n")
     initializeGame()
 }
@@ -25,6 +25,9 @@ fun initializeGame() {
     val interpreter = CommandInterpreter(gameSession)
     gameSession.state = GameState.FREEROAM
     while (true) {
+        if (gameSession.state == GameState.GAMEOVER) {
+            break
+        }
         val input = Scanner(System.`in`)
         gameSession.uiHandler.updateSessionInfo()
         gameSession.uiHandler.displayAvailableCommands()

@@ -77,5 +77,17 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
         println("${entity.getEntityDamage()} damage received.")
     }
 
+    override fun gameOverLost() {
+        println("""
+            Despite all the persistence of ${session.player.nickname}, the last battle ended in complete failure. 
+            ${session.player.nickname}'s last sighs were heard as his soul left his body. 
+            Their blood was gradually absorbed by the surroundings of the place. 
+            There is no telling how many more souls Thicgrim will take, 
+            but for ${session.player.nickname} this was the last destination.
+            
+            GAME OVER.
+        """.trimIndent())
+    }
+
 
 }

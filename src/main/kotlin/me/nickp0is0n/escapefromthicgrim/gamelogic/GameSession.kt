@@ -60,6 +60,10 @@ class GameSession (val player: Player,
         } else {
             player.health -= totalDamage
         }
+        if (player.health <= 0) {
+            state = GameState.GAMEOVER
+            uiHandler.gameOverLost()
+        }
     }
 
     fun incrementMove() {

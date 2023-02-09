@@ -1,6 +1,5 @@
 package me.nickp0is0n.escapefromthicgrim.gamelogic
 
-import me.nickp0is0n.escapefromthicgrim.models.Player
 import me.nickp0is0n.escapefromthicgrim.models.PlayerProperty
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
 import me.nickp0is0n.escapefromthicgrim.ui.Direction
@@ -78,6 +77,10 @@ class CommandInterpreter (val session: GameSession) {
                         }
                     }
                 }
+            }
+
+            GameState.GAMEOVER -> {
+                return
             }
 
             else -> {

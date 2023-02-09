@@ -16,4 +16,5 @@ interface UIHandler {
     fun displayEmptyCell()
     fun displayPerkInfo(perk: CellPerk)
     fun displayDamage(entity: AggressiveCellEntity)
+    fun gameOverLost()
 }
