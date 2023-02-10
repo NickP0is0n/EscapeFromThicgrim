@@ -10,7 +10,7 @@ import kotlin.random.Random
 import kotlin.reflect.full.primaryConstructor
 
 const val PERK_SPAWN_PROBABILITY = 4
-const val FRIENDLY_ENTITY_SPAWN_PROBABILITY = 3
+const val FRIENDLY_ENTITY_SPAWN_PROBABILITY = 2
 
 class ClassicWorldGenerator(private val difficulty: Int): WorldGenerator {
     override fun generateFieldCell(): PlayField {

@@ -1,6 +1,7 @@
 package me.nickp0is0n.escapefromthicgrim.ui
 
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
+import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
 
 interface UIHandler {
@@ -16,5 +17,6 @@ interface UIHandler {
     fun displayEmptyCell()
     fun displayPerkInfo(perk: CellPerk)
     fun displayDamage(entity: AggressiveCellEntity)
+    fun displaySellerEncounter(entity: SellerCellEntity)
     fun gameOverLost()
 }

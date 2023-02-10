@@ -79,6 +79,18 @@ class CommandInterpreter (val session: GameSession) {
                 }
             }
 
+            GameState.TRADE -> {
+                when {
+                    command.contains("buy") -> {
+                        println("Work in progress. Unavailable.")
+                    }
+
+                    command == "leave" -> {
+                        session.state = GameState.FREEROAM
+                    }
+                }
+            }
+
             GameState.GAMEOVER -> {
                 return
             }

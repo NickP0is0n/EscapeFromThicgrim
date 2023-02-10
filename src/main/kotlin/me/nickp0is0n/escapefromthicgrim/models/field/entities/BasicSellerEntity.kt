@@ -1,6 +1,6 @@
 package me.nickp0is0n.escapefromthicgrim.models.field.entities
 
-class BasicSellerEntity: FriendlyCellEntity {
+class BasicSellerEntity: SellerCellEntity {
     //TODO:seller mechanics
     override fun getEntityHealth(): Int {
         return 100

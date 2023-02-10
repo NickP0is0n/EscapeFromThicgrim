@@ -4,6 +4,7 @@ import me.nickp0is0n.escapefromthicgrim.models.Player
 import me.nickp0is0n.escapefromthicgrim.models.PlayerProperty
 import me.nickp0is0n.escapefromthicgrim.models.field.PlayField
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
+import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.ui.UIHandler
 
 class GameSession (val player: Player,
@@ -34,6 +35,13 @@ class GameSession (val player: Player,
                     field.cells[field.playerPosition.first][field.playerPosition.second].entity as AggressiveCellEntity
                 uiHandler.displayMobEncounter(entity)
                 state = GameState.COMBAT
+            }
+
+            field.cells[field.playerPosition.first][field.playerPosition.second].entity is SellerCellEntity -> {
+                state = GameState.TRADE
+                val entity: SellerCellEntity =
+                    field.cells[field.playerPosition.first][field.playerPosition.second].entity as SellerCellEntity
+                uiHandler.displaySellerEncounter(entity)
             }
 
             else -> {

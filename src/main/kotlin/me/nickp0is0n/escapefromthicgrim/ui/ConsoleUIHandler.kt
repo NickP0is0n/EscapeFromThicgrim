@@ -3,6 +3,7 @@ package me.nickp0is0n.escapefromthicgrim.ui
 import me.nickp0is0n.escapefromthicgrim.gamelogic.GameSession
 import me.nickp0is0n.escapefromthicgrim.gamelogic.GameState
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
+import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
 
 class ConsoleUIHandler(val session: GameSession): UIHandler {
@@ -18,6 +19,7 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
             when (session.state) {
                 GameState.COMBAT -> "attack, escape"
                 GameState.FREEROAM -> "move [n,w,s,e]"
+                GameState.TRADE -> "buy [id of gadget] (wip), leave"
                 else -> ""
             }
         }): ")
@@ -75,6 +77,11 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
 
     override fun displayDamage(entity: AggressiveCellEntity) {
         println("${entity.getEntityDamage()} damage received.")
+    }
+
+    override fun displaySellerEncounter(entity: SellerCellEntity) {
+        println("After this long path ${session.player.nickname} can have a bit of rest - they encountered friendly ${entity.getEntityName()}.")
+        println("[note from developer] Sellers are currently work in progress.")
     }
 
     override fun gameOverLost() {
