@@ -39,7 +39,12 @@ class CommandInterpreter (val session: GameSession) {
                 when (command) {
                     "attack" -> {
                         val entity = session.field.cells[session.field.playerPosition.first][session.field.playerPosition.second].entity as AggressiveCellEntity
-                        val totalPlayerDamage = (session.player.damage + session.player.gadgets.sumOf { if (it.affectedProperties.count { it.first == PlayerProperty.DAMAGE } > 0) it.affectedProperties.find { it.first == PlayerProperty.DAMAGE }!!.second else 0})
+                        val totalPlayerDamage = (session.player.damage + session.player.gadgets.sumOf {
+                            if (it.getPropertyChange().first == PlayerProperty.DAMAGE) {
+                                it.getPropertyChange().second
+                            }
+                            else 0
+                        })
                         var damageAbsorbed = 0
                         if (entity.getEntityArmor() > 0) {
                             val possibleArmorDamage: Int = totalPlayerDamage / 2

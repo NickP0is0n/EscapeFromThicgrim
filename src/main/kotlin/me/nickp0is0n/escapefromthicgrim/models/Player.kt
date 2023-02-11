@@ -1,5 +1,6 @@
 package me.nickp0is0n.escapefromthicgrim.models
 
+import me.nickp0is0n.escapefromthicgrim.models.gadgets.Gadget
 import java.io.Serializable
 
 data class Player(

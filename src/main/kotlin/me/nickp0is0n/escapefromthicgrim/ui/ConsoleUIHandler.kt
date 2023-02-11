@@ -10,7 +10,7 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
     override fun updateSessionInfo() {
         println("Move ${session.currentMove}.")
         println("${session.player.nickname} is staying in position X: ${session.field.playerPosition.first}, Y: ${session.field.playerPosition.second}.")
-        println("${session.player.nickname} is wearing: ${session.player.gadgets.joinToString(", ")}")
+        println("${session.player.nickname} is wearing: ${session.player.gadgets.joinToString(", ") { n -> n.getGadgetUIName() }}")
         println("${session.player.nickname}'s health: ${session.player.health}, your armor: ${session.player.armor}, your stamina: ${session.player.stamina}.")
     }
 
