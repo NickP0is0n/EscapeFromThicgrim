@@ -5,6 +5,7 @@ import me.nickp0is0n.escapefromthicgrim.gamelogic.GameState
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
+import java.util.*
 
 class ConsoleUIHandler(val session: GameSession): UIHandler {
     override fun updateSessionInfo() {
@@ -82,6 +83,15 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
     override fun displaySellerEncounter(entity: SellerCellEntity) {
         println("After this long path ${session.player.nickname} can have a bit of rest - they encountered friendly ${entity.getEntityName()}.")
         println("[note from developer] Sellers are currently work in progress.")
+    }
+
+    override fun displaySellerItems(entity: SellerCellEntity) {
+        println("Available items to buy:")
+        val itemList = entity.getAvailableItems()
+        itemList.forEachIndexed { index, gadget ->
+            println("${index + 1}. ${gadget.getGadgetUIName()}: It ${if(gadget.getPropertyChange().second < 0) "decreases" else "increases"} your ${gadget.getPropertyChange().first.toString().lowercase(Locale.getDefault())} by ${gadget.getPropertyChange().second} points. (Stamina decrease: ${gadget.getStaminaChange()})")
+        }
+        println()
     }
 
     override fun gameOverLost() {

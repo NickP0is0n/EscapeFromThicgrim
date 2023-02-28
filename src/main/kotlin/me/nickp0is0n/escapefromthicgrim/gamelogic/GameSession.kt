@@ -42,6 +42,7 @@ class GameSession (val player: Player,
                 val entity: SellerCellEntity =
                     field.cells[field.playerPosition.first][field.playerPosition.second].entity as SellerCellEntity
                 uiHandler.displaySellerEncounter(entity)
+                uiHandler.displaySellerItems(entity)
             }
 
             else -> {

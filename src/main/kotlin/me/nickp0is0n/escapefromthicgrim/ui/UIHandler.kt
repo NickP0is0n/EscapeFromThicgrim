@@ -18,5 +18,6 @@ interface UIHandler {
     fun displayPerkInfo(perk: CellPerk)
     fun displayDamage(entity: AggressiveCellEntity)
     fun displaySellerEncounter(entity: SellerCellEntity)
+    fun displaySellerItems(entity: SellerCellEntity)
     fun gameOverLost()
 }

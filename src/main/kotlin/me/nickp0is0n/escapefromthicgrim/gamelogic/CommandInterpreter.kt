@@ -2,6 +2,7 @@ package me.nickp0is0n.escapefromthicgrim.gamelogic
 
 import me.nickp0is0n.escapefromthicgrim.models.PlayerProperty
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
+import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.ui.Direction
 import me.nickp0is0n.escapefromthicgrim.utils.BasicConsoleLogger
 import kotlin.random.Random
@@ -87,7 +88,14 @@ class CommandInterpreter (val session: GameSession) {
             GameState.TRADE -> {
                 when {
                     command.contains("buy") -> {
-                        println("Work in progress. Unavailable.")
+                        val entity: SellerCellEntity =
+                            session.field.cells[session.field.playerPosition.first][session.field.playerPosition.second].entity as SellerCellEntity
+                        val itemId = command.removePrefix("buy ").toInt()
+                        if (itemId in 1..entity.getAvailableItems().size) {
+                            //TODO:add currency management
+                            session.player.gadgets.add(entity.getAvailableItems()[itemId - 1])
+                            entity.removeItemFromAvailable(entity.getAvailableItems()[itemId - 1])
+                        }
                     }
 
                     command == "leave" -> {
