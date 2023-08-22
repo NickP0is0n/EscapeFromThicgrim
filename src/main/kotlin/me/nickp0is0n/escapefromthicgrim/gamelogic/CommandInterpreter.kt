@@ -94,6 +94,7 @@ class CommandInterpreter (val session: GameSession) {
                         if (itemId in 1..entity.getAvailableItems().size) {
                             //TODO:add currency management
                             session.player.gadgets.add(entity.getAvailableItems()[itemId - 1])
+                            session.uiHandler.displaySoldItem(entity.getAvailableItems()[itemId - 1])
                             entity.removeItemFromAvailable(entity.getAvailableItems()[itemId - 1])
                         }
                     }

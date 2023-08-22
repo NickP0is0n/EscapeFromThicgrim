@@ -3,6 +3,7 @@ package me.nickp0is0n.escapefromthicgrim.ui
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
+import me.nickp0is0n.escapefromthicgrim.models.gadgets.Gadget
 
 interface UIHandler {
     fun updateSessionInfo()
@@ -19,5 +20,6 @@ interface UIHandler {
     fun displayDamage(entity: AggressiveCellEntity)
     fun displaySellerEncounter(entity: SellerCellEntity)
     fun displaySellerItems(entity: SellerCellEntity)
+    fun displaySoldItem(item: Gadget)
     fun gameOverLost()
 }

@@ -5,6 +5,7 @@ import me.nickp0is0n.escapefromthicgrim.gamelogic.GameState
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.AggressiveCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.entities.SellerCellEntity
 import me.nickp0is0n.escapefromthicgrim.models.field.perks.CellPerk
+import me.nickp0is0n.escapefromthicgrim.models.gadgets.Gadget
 import java.util.*
 
 class ConsoleUIHandler(val session: GameSession): UIHandler {
@@ -92,6 +93,10 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
             println("${index + 1}. ${gadget.getGadgetUIName()}: It ${if(gadget.getPropertyChange().second < 0) "decreases" else "increases"} your ${gadget.getPropertyChange().first.toString().lowercase(Locale.getDefault())} by ${gadget.getPropertyChange().second} points. (Stamina decrease: ${gadget.getStaminaChange()})")
         }
         println()
+    }
+
+    override fun displaySoldItem(item: Gadget) {
+        println("${session.player.nickname} just successfully bought ${item.getGadgetUIName()}.")
     }
 
     override fun gameOverLost() {
