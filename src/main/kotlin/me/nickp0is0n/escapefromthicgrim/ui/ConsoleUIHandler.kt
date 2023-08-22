@@ -99,6 +99,10 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
         println("${session.player.nickname} just successfully bought ${item.getGadgetUIName()}.")
     }
 
+    override fun displayStaminaDecrease(item: Gadget) {
+        println("${item.getGadgetUIName()} just decreased your stamina by ${item.getStaminaChange()} points.")
+    }
+
     override fun gameOverLost() {
         println("""
             Despite all the persistence of ${session.player.nickname}, the last battle ended in complete failure. 

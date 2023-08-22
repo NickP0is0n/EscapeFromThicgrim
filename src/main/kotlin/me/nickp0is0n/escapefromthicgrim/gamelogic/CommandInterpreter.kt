@@ -93,9 +93,14 @@ class CommandInterpreter (val session: GameSession) {
                         val itemId = command.removePrefix("buy ").toInt()
                         if (itemId in 1..entity.getAvailableItems().size) {
                             //TODO:add currency management
-                            session.player.gadgets.add(entity.getAvailableItems()[itemId - 1])
-                            session.uiHandler.displaySoldItem(entity.getAvailableItems()[itemId - 1])
-                            entity.removeItemFromAvailable(entity.getAvailableItems()[itemId - 1])
+                            val boughtItem = entity.getAvailableItems()[itemId - 1]
+                            session.player.gadgets.add(boughtItem)
+                            session.uiHandler.displaySoldItem(boughtItem)
+                            if (boughtItem.getStaminaChange() > 0) {
+                                session.uiHandler.displayStaminaDecrease(boughtItem)
+                                session.player.stamina -= boughtItem.getStaminaChange()
+                            }
+                            entity.removeItemFromAvailable(boughtItem)
                         }
                     }
 
