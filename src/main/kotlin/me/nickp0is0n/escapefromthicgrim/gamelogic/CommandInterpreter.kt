@@ -12,25 +12,47 @@ class CommandInterpreter (val session: GameSession) {
     fun executeCommand(command: String) {
         when (session.state) {
             GameState.FREEROAM -> {
-                when (command.substring(5)) {
-                    "n" -> {
-                        session.field.playerPosition = Pair(session.field.playerPosition.first, session.field.playerPosition.second + 1)
-                        session.uiHandler.displayCharacterMovement(Direction.NORTH)
-                    }
+                if (command.contains("move")) {
+                    when (command.substring(5)) {
+                        "n" -> {
+                            if (session.field.playerPosition.second + 1 == session.field.height) {
+                                session.uiHandler.displayWorldBound(Direction.NORTH)
+                            }
+                            else {
+                                session.field.playerPosition = Pair(session.field.playerPosition.first, session.field.playerPosition.second + 1)
+                                session.uiHandler.displayCharacterMovement(Direction.NORTH)
+                            }
+                        }
 
-                    "s" -> {
-                        session.field.playerPosition = Pair(session.field.playerPosition.first, session.field.playerPosition.second - 1)
-                        session.uiHandler.displayCharacterMovement(Direction.SOUTH)
-                    }
+                        "s" -> {
+                            if (session.field.playerPosition.second == 0) {
+                                session.uiHandler.displayWorldBound(Direction.SOUTH)
+                            }
+                            else {
+                                session.field.playerPosition = Pair(session.field.playerPosition.first, session.field.playerPosition.second - 1)
+                                session.uiHandler.displayCharacterMovement(Direction.SOUTH)
+                            }
+                        }
 
-                    "w" -> {
-                        session.field.playerPosition = Pair(session.field.playerPosition.first - 1, session.field.playerPosition.second)
-                        session.uiHandler.displayCharacterMovement(Direction.WEST)
-                    }
+                        "w" -> {
+                            if (session.field.playerPosition.first == 0) {
+                                session.uiHandler.displayWorldBound(Direction.WEST)
+                            }
+                            else {
+                                session.field.playerPosition = Pair(session.field.playerPosition.first - 1, session.field.playerPosition.second)
+                                session.uiHandler.displayCharacterMovement(Direction.WEST)
+                            }
+                        }
 
-                    "e" -> {
-                        session.field.playerPosition = Pair(session.field.playerPosition.first + 1, session.field.playerPosition.second - 1)
-                        session.uiHandler.displayCharacterMovement(Direction.EAST)
+                        "e" -> {
+                            if (session.field.playerPosition.first + 1 == session.field.width) {
+                                session.uiHandler.displayWorldBound(Direction.EAST)
+                            }
+                            else {
+                                session.field.playerPosition = Pair(session.field.playerPosition.first + 1, session.field.playerPosition.second)
+                                session.uiHandler.displayCharacterMovement(Direction.EAST)
+                            }
+                        }
                     }
                 }
                 session.makeMoveAndFullyUpdateSessionInfo()

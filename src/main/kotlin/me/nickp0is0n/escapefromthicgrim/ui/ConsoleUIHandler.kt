@@ -103,6 +103,15 @@ class ConsoleUIHandler(val session: GameSession): UIHandler {
         println("${item.getGadgetUIName()} just decreased your stamina by ${item.getStaminaChange()} points.")
     }
 
+    override fun displayWorldBound(direction: Direction) {
+        when (direction) {
+            Direction.NORTH -> println("Ahoy, ${session.player.nickname}! You've delved deep into the dungeon, only to meet an impassable wall at the northern edge. The shadows whisper tales of uncharted lands, but this path ends here, brave adventurer.")
+            Direction.WEST -> println("Greetings, ${session.player.nickname}! Your steps echo in the western reaches of the dungeon, until you encounter an unyielding wall. The air grows stale, and the path ahead fades into the unknown. Your odyssey finds its terminus here.")
+            Direction.SOUTH -> println("Halt, ${session.player.nickname}! You've treaded far into the labyrinthine dungeon, only to find an insurmountable wall at the southern border. The path vanishes into darkness, reminding you of your limits in this direction.")
+            Direction.EAST -> println("Well met, ${session.player.nickname}! Your quest has brought you to the eastern border of this foreboding dungeon. The corridors grow narrow and treacherous, revealing no passage forward. Your journey ends here, valiant explorer.")
+        }
+    }
+
     override fun gameOverLost() {
         println("""
             Despite all the persistence of ${session.player.nickname}, the last battle ended in complete failure. 

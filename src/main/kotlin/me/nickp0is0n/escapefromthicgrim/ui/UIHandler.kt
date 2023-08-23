@@ -22,5 +22,6 @@ interface UIHandler {
     fun displaySellerItems(entity: SellerCellEntity)
     fun displaySoldItem(item: Gadget)
     fun displayStaminaDecrease(item: Gadget)
+    fun displayWorldBound(direction: Direction)
     fun gameOverLost()
 }
