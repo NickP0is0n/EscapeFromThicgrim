@@ -15,7 +15,7 @@ import kotlin.random.Random
 fun main() {
     println("Escape From Thicgrim")
     println("Console Edition")
-    println("Version 0.0.8, built on 09.02.2023")
+    println("Version 0.0.9, built on 24.08.2023")
     println("Created by Mykola Chaikovskyi\n")
     initializeGame()
 }
